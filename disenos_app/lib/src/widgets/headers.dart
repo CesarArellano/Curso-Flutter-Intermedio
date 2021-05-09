@@ -154,3 +154,44 @@ class _PeakHeaderPainter extends CustomPainter {
   }
 
 }
+
+class CurvedHeader extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(      
+      width: double.infinity,
+      height: double.infinity,
+      child: CustomPaint(
+        painter: _CurvedHeaderPainter(),
+      ),
+    );
+  }
+}
+
+class _CurvedHeaderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final pencil = Paint();
+    
+    // Properties
+    pencil.color = Color(0xff615AAB);
+    pencil.style = PaintingStyle.fill; // .stoke
+    pencil.strokeWidth = 2.0;
+
+    final path = Path();
+
+    path.lineTo(0, size.height * 0.2);
+    path.quadraticBezierTo(size.width * 0.5, size.height * 0.4, size.width, size.height * 0.2);
+    path.lineTo(size.width, 0);
+    
+    canvas.drawPath(path, pencil);
+
+  }
+  
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;  
+  }
+
+}
