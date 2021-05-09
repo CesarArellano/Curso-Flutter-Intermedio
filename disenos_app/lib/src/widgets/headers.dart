@@ -195,3 +195,45 @@ class _CurvedHeaderPainter extends CustomPainter {
   }
 
 }
+
+class WavesHeader extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(      
+      width: double.infinity,
+      height: double.infinity,
+      child: CustomPaint(
+        painter: _WavesHeaderPainter(),
+      ),
+    );
+  }
+}
+
+class _WavesHeaderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final pencil = Paint();
+    
+    // Properties
+    pencil.color = Color(0xff615AAB);
+    pencil.style = PaintingStyle.fill; // .stoke
+    pencil.strokeWidth = 2.0;
+
+    final path = Path();
+
+    path.lineTo(0, size.height * 0.25);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.35, size.width * 0.5, size.height * 0.25);
+    path.quadraticBezierTo(size.width * 0.75, size.height * 0.15, size.width, size.height * 0.25);
+    path.lineTo(size.width, 0);
+    
+    canvas.drawPath(path, pencil);
+
+  }
+  
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;  
+  }
+
+}
