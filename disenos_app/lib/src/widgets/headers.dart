@@ -32,9 +32,42 @@ class DiagonalHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      color: Color(0xff615AAB),
+    return Container(      
+      width: double.infinity,
+      height: double.infinity,
+      child: CustomPaint(
+        painter: _DiagonalHeaderPainter(),
+      ),
     );
   }
+}
+
+class _DiagonalHeaderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final pencil = Paint();
+    
+    // Properties
+    pencil.color = Color(0xff615AAB);
+    pencil.style = PaintingStyle.fill; // .stoke
+    pencil.strokeWidth = 2.0;
+
+    final path = Path();
+
+    // Draw with the path and the pencil
+    path.moveTo(0, size.height * 0.35);
+    path.lineTo(size.width, size.height * 0.30);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+
+    canvas.drawPath(path, pencil);
+
+  }
+  
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;  
+  }
+
 }
