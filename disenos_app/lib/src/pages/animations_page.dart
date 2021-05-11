@@ -34,17 +34,22 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
   AnimationController controller;
   Animation<double> rotation;
   Animation<double> opacity;
+  Animation<double> moveRight;
 
   @override
   void initState() {
-    controller = new AnimationController(vsync: this, duration: Duration(milliseconds: 3000));
+    controller = new AnimationController(vsync: this, duration: Duration(milliseconds: 2000));
     // rotation = Tween( begin: 0.0, end: 2.0 * Math.pi ).animate(controller);
-    rotation = Tween( begin: 0.0, end: 2.0 * Math.pi ).animate(
+    rotation = Tween( begin: 0.0, end: 1.0 * Math.pi ).animate(
       CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
     );
 
     opacity = Tween(begin: 0.1, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: Interval(0, 0.50, curve: Curves.easeOut))
+    );
+
+    moveRight = Tween(begin: 0.0, end: 250.0).animate(
+      CurvedAnimation(parent: controller, curve: Curves.elasticOut)
     );
 
     controller.addListener(() {
@@ -70,11 +75,14 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
       animation: controller,
       child: _SquareHeader(),
       builder: (BuildContext context, Widget squareChild) {
-        return Transform.rotate(
-          angle: rotation.value,
-          child: Opacity(
-            opacity: opacity.value,
-            child: squareChild
+        return Transform.translate(
+          offset: Offset(moveRight.value,0),
+          child: Transform.rotate(
+            angle: rotation.value,
+            child: Opacity(
+              opacity: opacity.value,
+              child: squareChild
+            ),
           ),
         );
       },
