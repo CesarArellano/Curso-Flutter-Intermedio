@@ -36,12 +36,15 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
 
   @override
   void initState() {
-    controller = new AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
-    rotation = Tween( begin: 0.0, end: 2.0 * Math.pi ).animate(controller);
+    controller = new AnimationController(vsync: this, duration: Duration(milliseconds: 2000));
+    // rotation = Tween( begin: 0.0, end: 2.0 * Math.pi ).animate(controller);
+    rotation = Tween( begin: 0.0, end: 2.0 * Math.pi ).animate(
+      CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
+    );
     controller.addListener(() {
       print('Status ${controller.status}');
       if(controller.status == AnimationStatus.completed) {
-        controller.reverse();
+        controller.reset();
       }
     });
 
