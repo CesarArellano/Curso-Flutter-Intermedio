@@ -57,7 +57,6 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
     );
 
     controller.addListener(() {
-      print('Status ${controller.status}');
       if(controller.status == AnimationStatus.completed) {
         controller.repeat();
       }
@@ -79,6 +78,7 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
       animation: controller,
       child: _SquareHeader(),
       builder: (BuildContext context, Widget squareChild) {
+        //print('Opacity: ${opacity.value}'); We determined the state of the animation.
         return Transform.translate(
           offset: Offset(moveRight.value,0),
           child: Transform.rotate(
