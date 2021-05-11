@@ -43,13 +43,15 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
       CurvedAnimation(parent: controller, curve: Curves.elasticInOut)
     );
 
-    opacity = Tween(begin: 0.1, end: 1.0).animate(controller);
+    opacity = Tween(begin: 0.1, end: 1.0).animate(
+      CurvedAnimation(parent: controller, curve: Interval(0, 0.50, curve: Curves.easeOut))
+    );
 
     controller.addListener(() {
       print('Status ${controller.status}');
-      if(controller.status == AnimationStatus.completed) {
-        controller.reset();
-      }
+      // if(controller.status == AnimationStatus.completed) {
+      //   controller.reset();
+      // }
     });
 
     super.initState();
