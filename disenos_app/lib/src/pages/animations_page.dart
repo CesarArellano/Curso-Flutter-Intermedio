@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as Math;
 
 class AnimationsPage extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class _SquareHeader extends StatelessWidget {
     return Container(
       width: 70,
       height: 70,
-      color: Colors.blueGrey,
+      color: Colors.blue,
     );
   }
 }
@@ -30,13 +31,19 @@ class SquareAnimated extends StatefulWidget {
 }
 
 class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> rotation;
+  AnimationController controller;
+  Animation<double> rotation;
 
   @override
   void initState() {
-    controller = new AnimationController(vsync: this, duration: Duration(milliseconds: 400));
-    rotation = Tween(begin: 0.0, end: 2.0).animate(controller);
+    controller = new AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
+    rotation = Tween( begin: 0.0, end: 2.0 * Math.pi ).animate(controller);
+    controller.addListener(() {
+      print('Status ${controller.status}');
+      if(controller.status == AnimationStatus.completed) {
+        controller.reverse();
+      }
+    });
 
     super.initState();
   }
@@ -49,7 +56,17 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return _SquareHeader();
+    controller.forward(); // Darle play a la animación
+    return AnimatedBuilder(
+      animation: controller,
+      child: _SquareHeader(),
+      builder: (BuildContext context, Widget child) {
+        return Transform.rotate(
+          angle: rotation.value,
+          child: child,
+        );
+      },
+    );
   }
 }
 
