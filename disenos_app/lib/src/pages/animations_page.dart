@@ -34,6 +34,7 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
   AnimationController controller;
   Animation<double> rotation;
   Animation<double> opacity;
+  Animation<double> opacityOut;
   Animation<double> moveRight;
   Animation<double> increaseSize;
   @override
@@ -46,6 +47,10 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
 
     opacity = Tween(begin: 0.1, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: Interval(0, 0.50, curve: Curves.easeOut))
+    );
+
+    opacityOut = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: controller, curve: Interval(0.75, 1.0, curve: Curves.easeOut))
     );
 
     moveRight = Tween(begin: 1.0, end: 250.0).animate(
@@ -84,7 +89,7 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
           child: Transform.rotate(
             angle: rotation.value,
             child: Opacity(
-              opacity: opacity.value,
+              opacity: opacity.value - opacityOut.value,
               child: Transform.scale(
                 scale: increaseSize.value,
                 child: squareChild
