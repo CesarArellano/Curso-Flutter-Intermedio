@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:disenos_app/src/challenges/animated_square.dart';
+
+import 'package:disenos_app/src/pages/circular_progress_page.dart';
+//import 'package:disenos_app/src/challenges/animated_square.dart';
 //import 'package:disenos_app/src/pages/headers_page.dart';
 //import 'package:disenos_app/src/pages/animations_page.dart';
 
@@ -11,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: AnimatedSquarePage()
+      home: CircularProgressPage()
     );
   }
 }
