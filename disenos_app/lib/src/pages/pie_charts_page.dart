@@ -13,7 +13,7 @@ class _PieChartsPageState extends State<PieChartsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(  
         child: Icon(Icons.refresh),
         onPressed: (){
           setState(() {
@@ -28,8 +28,11 @@ class _PieChartsPageState extends State<PieChartsPage> {
         child: Container(
           width: 300,
           height: 300,
-          color: Colors.red,
-          child: RadialProgress(percentage: 40.0)
+          child: RadialProgress(
+            percentage: percentage, 
+            primaryColor: Colors.indigo,
+            primaryThickness: 10.0,
+          )
         )
       ),
     );
