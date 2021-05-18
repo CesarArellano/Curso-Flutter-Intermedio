@@ -85,9 +85,25 @@ class MyRadialProgress extends CustomPainter {
     Offset center  = new Offset(size.width * 0.5, size.height / 2);
     double radius = min(size.width * 0.5, size.height * 0.5);
     canvas.drawCircle(center, radius, paint);
-    // Bow
+    // Arc
+
+    final Rect rect = new Rect.fromCircle(
+      center: Offset(0, 0),
+      radius: 180.0
+    );
+    final Gradient gradient = new LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: <Color>[
+        Color(0xff6D05E8),
+        Color(0xffC012FF),
+        Color(0xff6D05FA),
+      ]
+    );
+
     final arcPaint = new Paint()
-      ..color = primaryColor
+      //..color = primaryColor
+      ..shader = gradient.createShader(rect)
       ..strokeCap = StrokeCap.round
       ..strokeWidth = primaryThickness
       ..style = PaintingStyle.stroke;
