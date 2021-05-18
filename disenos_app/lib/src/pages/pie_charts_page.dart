@@ -24,17 +24,46 @@ class _PieChartsPageState extends State<PieChartsPage> {
           });
         }
       ),
-      body: Center(
-        child: Container(
-          width: 300,
-          height: 300,
-          child: RadialProgress(
-            percentage: percentage, 
-            primaryColor: Colors.indigo,
-            primaryThickness: 10.0,
-          )
-        )
-      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              CustomRadialProgress(percentage: percentage, color: Colors.blue),
+              CustomRadialProgress(percentage: percentage, color: Colors.red)
+            ],
+          ),
+          SizedBox(height: 10.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              CustomRadialProgress(percentage: percentage, color: Colors.green),
+              CustomRadialProgress(percentage: percentage, color: Colors.purple)
+            ],
+          ),
+        ],
+      )
+    );
+  }
+}
+
+class CustomRadialProgress extends StatelessWidget {
+  final double percentage;
+  final Color color;
+
+  CustomRadialProgress({ @required this.percentage, @required this.color });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      height: 150,
+      child: RadialProgress(
+        percentage: percentage, 
+        primaryColor: color,
+        primaryThickness: 8.0,
+      )
     );
   }
 }

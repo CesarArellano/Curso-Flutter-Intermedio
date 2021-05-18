@@ -88,6 +88,7 @@ class MyRadialProgress extends CustomPainter {
     // Bow
     final arcPaint = new Paint()
       ..color = primaryColor
+      ..strokeCap = StrokeCap.round
       ..strokeWidth = primaryThickness
       ..style = PaintingStyle.stroke;
     
