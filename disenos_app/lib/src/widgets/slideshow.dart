@@ -76,12 +76,12 @@ class __SlidesState extends State<_Slides> {
   @override
   void initState() { 
     super.initState();
-
     pageViewController.addListener(() {
       // Updating currentPage value
       Provider.of<SlideShowModel>(context, listen: false).currentPage = pageViewController.page;
     });
   }
+
   @override
   void dispose() {
     pageViewController.dispose();
