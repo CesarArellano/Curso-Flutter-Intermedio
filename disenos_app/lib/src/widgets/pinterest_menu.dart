@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PinterestButton {
   final Function onPressed;
@@ -11,33 +12,49 @@ class PinterestButton {
 }
 
 class PinterestMenu extends StatelessWidget {
+
   final List<PinterestButton> items = [
     PinterestButton(icon: Icons.pie_chart, onPressed: ()  { print('Icon pie_chart'); }),
     PinterestButton(icon: Icons.search, onPressed: ()  { print('Icon search'); }),
     PinterestButton(icon: Icons.notifications, onPressed: ()  { print('Icon notifications'); }),
     PinterestButton(icon: Icons.supervised_user_circle, onPressed: ()  { print('Icon supervised_user_circle'); }),
   ];
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        child: _MenuItems(menuItems: items),
-        width: 250,
-        height: 60,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:  BorderRadius.circular(100),
-          boxShadow: <BoxShadow> [
-            BoxShadow(
-              color: Colors.black38,
-              blurRadius: 10,
-              spreadRadius: -5
-            )
-          ]
+      child: ChangeNotifierProvider(
+        create: (_) => new _MenuModel(),
+        child: _PinterestMenuBackground(
+          child: _MenuItems(menuItems: items),
         ),
       )
+    );
+  }
+}
+
+class _PinterestMenuBackground extends StatelessWidget {
+  final Widget child;
+
+  _PinterestMenuBackground({ this.child });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: child,
+      width: 250,
+      height: 60,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius:  BorderRadius.circular(100),
+        boxShadow: <BoxShadow> [
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 10,
+            spreadRadius: -5
+          )
+        ]
+      ),
     );
   }
 }
@@ -64,8 +81,32 @@ class _PinterestMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Icon(item.icon),
+    final selectedItem = Provider.of<_MenuModel>(context).selectedItem;
+
+    return GestureDetector(
+      onTap: () {
+        Provider.of<_MenuModel>(context, listen: false).selectedItem = index;
+        item.onPressed();
+      },
+      behavior: HitTestBehavior.translucent,
+      child: Container(
+        child: Icon(
+          item.icon, 
+          size: (selectedItem == index) ? 30.0 : 25.0, 
+          color: (selectedItem == index) ? Colors.black : Colors.black54
+        ),
+      ),
     );
+  }
+}
+
+class _MenuModel with ChangeNotifier {
+  int _selectedItem = 0;
+
+  int get selectedItem => this._selectedItem;
+
+  set selectedItem( int index ) {
+    this._selectedItem = index;
+    notifyListeners();
   }
 }
