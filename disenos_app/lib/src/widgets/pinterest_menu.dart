@@ -12,20 +12,24 @@ class PinterestButton {
 }
 
 class PinterestMenu extends StatelessWidget {
+  final bool show;
+  final List<PinterestButton> items;
 
-  final List<PinterestButton> items = [
-    PinterestButton(icon: Icons.pie_chart, onPressed: ()  { print('Icon pie_chart'); }),
-    PinterestButton(icon: Icons.search, onPressed: ()  { print('Icon search'); }),
-    PinterestButton(icon: Icons.notifications, onPressed: ()  { print('Icon notifications'); }),
-    PinterestButton(icon: Icons.supervised_user_circle, onPressed: ()  { print('Icon supervised_user_circle'); }),
-  ];
-  
+  PinterestMenu({
+    this.show = true,
+    @required this.items
+  });
+    
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => new _MenuModel(),
-      child: _PinterestMenuBackground(
-        child: _MenuItems(menuItems: items),
+      child: AnimatedOpacity(
+        opacity: ( show ) ? 1 : 0,
+        duration: Duration(milliseconds: 250),
+        child: _PinterestMenuBackground(
+          child: _MenuItems(menuItems: items),
+        ),
       ),
     );
   }
