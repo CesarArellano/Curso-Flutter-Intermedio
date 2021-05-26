@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SquareHeader extends StatelessWidget {
 
@@ -293,6 +294,34 @@ class _GradientHeaderPainter extends CustomPainter {
 }
 
 class IconHeader extends StatelessWidget {
+  final Color whiteColor = Colors.white.withOpacity(0.15);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        _IconHeaderBackground(),
+        Positioned(
+          top: -50.0,
+          left: -70.0,
+          child: FaIcon(FontAwesomeIcons.plus, color: whiteColor, size: 250),
+        ),
+        Column(          
+          children: <Widget>[
+            SizedBox(height: 80.0, width: double.infinity),
+            Text('Haz solicitado', style: TextStyle(fontSize: 20, color: Colors.white.withOpacity(0.5))),
+            SizedBox(height: 20.0),
+            Text('Asistencia médica', style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20.0),
+            FaIcon(FontAwesomeIcons.plus, color: Colors.white, size: 80),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _IconHeaderBackground extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Container(
