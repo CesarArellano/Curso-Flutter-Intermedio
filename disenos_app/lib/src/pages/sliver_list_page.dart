@@ -6,10 +6,43 @@ class SliverListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _MainScroll()
+      body: Stack(
+        children: <Widget> [
+          _MainScroll(),
+          Positioned(
+            bottom: -10,
+            right: 0,
+            child: _NewButtonList(),
+          )
+        ]
+      )
     );
   }
 }
+
+class _NewButtonList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width * 0.9,
+      height: 100,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 3),
+          primary: Color(0xffED6762),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(50))
+          )
+        ),
+        onPressed: () {},
+        child: Text('CREATE NEW LIST')
+      )
+    );
+  }
+
+}
+
 class _MainScroll extends StatelessWidget {
   final items = [
     _ListItem( 'Orange', Color(0xffF08F66) ),
@@ -48,7 +81,7 @@ class _MainScroll extends StatelessWidget {
             )
           )
         ),
-        SliverList(
+        SliverList(         
           delegate: SliverChildListDelegate([
             ...items,
             SizedBox(height: 100),
@@ -118,28 +151,6 @@ class _Title extends StatelessWidget {
           ],
         )
       ],
-    );
-  }
-}
-
-class _TaskList extends StatelessWidget {
-  final items = [
-    _ListItem( 'Orange', Color(0xffF08F66) ),
-    _ListItem( 'Family', Color(0xffF2A38A) ),
-    _ListItem( 'Subscriptions', Colors.pinkAccent ),
-    _ListItem( 'Books', Color(0xffFCEBAF) ),
-    _ListItem( 'Orange', Color(0xffF08F66) ),
-    _ListItem( 'Family', Color(0xffF2A38A) ),
-    _ListItem( 'Subscriptions', Color(0xffF7CDD5) ),
-    _ListItem( 'Books', Color(0xffFCEBAF) ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: BouncingScrollPhysics(),
-      itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) => items[index]
     );
   }
 }
