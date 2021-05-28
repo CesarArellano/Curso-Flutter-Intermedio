@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -64,14 +65,18 @@ class _NotificationsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       right: 0,
-      child: Container(
-        child: Text('$number', style: TextStyle(color: Colors.white, fontSize: 6)),
-        alignment: Alignment.center,
-        width: 12,
-        height: 12,
-        decoration: BoxDecoration(
-          color: Colors.redAccent,
-          shape: BoxShape.circle
+      child: Bounce(
+        controller: (controller) => Provider.of<_NotificationModel>(context).bounceController = controller,
+        from: 10,
+        child: Container(
+          child: Text('$number', style: TextStyle(color: Colors.white, fontSize: 6)),
+          alignment: Alignment.center,
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: Colors.redAccent,
+            shape: BoxShape.circle
+          ),
         ),
       )
     );
@@ -86,21 +91,33 @@ class FloatingButton extends StatelessWidget {
       backgroundColor: Colors.blue,
       child: FaIcon(FontAwesomeIcons.play),
       onPressed: () {
-        int number = Provider.of<_NotificationModel>(context, listen: false).number; 
+        final notiModel = Provider.of<_NotificationModel>(context, listen: false); 
+        int number = notiModel.number;
         number++;
-        Provider.of<_NotificationModel>(context, listen: false).number = number; 
+        notiModel.number = number; 
+        if(number >= 2) {
+          final controller =notiModel.bounceController;
+          controller.forward(from: 0.0);
+        }
       },
     );
   }
 }
 class _NotificationModel extends ChangeNotifier {
   int _number = 0;
+  AnimationController _bounceController;
 
   int get number => this._number;
 
   set number(int value) {
     this._number = value;
     notifyListeners();
+  }
+
+  AnimationController get bounceController => this._bounceController;
+
+  set bounceController(AnimationController controller) {
+    this._bounceController = controller;
   }
 
 }
