@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:animate_do_app/src/pages/twitter_page.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animate_do/animate_do.dart';
 
@@ -16,14 +18,16 @@ class Screen1Page extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            onPressed: (){},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => TwitterPage()));
+            },
             icon: FaIcon(FontAwesomeIcons.twitter),
           ),
           SlideInLeft(
             from: 50,
             child: IconButton(
               onPressed: (){
-                Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => Screen1Page()));
+                Navigator.push(context, CupertinoPageRoute(builder: (_) => Screen1Page()));
               },
               icon: Icon(Icons.navigate_next),
             ),
