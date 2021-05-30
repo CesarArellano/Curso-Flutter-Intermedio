@@ -1,8 +1,10 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music_player/helpers/helpers.dart';
+import 'package:music_player/models/audioplayer_model.dart';
 
 import 'package:music_player/widgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 
 class MusicPlayerPage extends StatelessWidget {
 
@@ -108,16 +110,17 @@ class _TitlePlayState extends State<TitlePlay> with SingleTickerProviderStateMix
           ),
           Spacer(),
           FloatingActionButton(
-            elevation: 0,
-            highlightElevation: 0,
             backgroundColor: Color(0xffF8CB51),
-            onPressed: (){
+            onPressed: () {
+              final audioPlayerModel = Provider.of<AudioPlayerModel>(context, listen: false);
               if ( this.isPlaying ) {
                 playAnimation.reverse();
                 this.isPlaying = false;
+                audioPlayerModel.controller.stop();
               } else {
                 playAnimation.forward();
                 this.isPlaying = true;
+                audioPlayerModel.controller.repeat();
               }
             },
             child: AnimatedIcon(              progress: playAnimation,
@@ -185,6 +188,8 @@ class DiskImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final audioPlayerModel = Provider.of<AudioPlayerModel>(context);
+    
     return Container(
       padding: EdgeInsets.all(20),
       width: 250,
@@ -194,7 +199,13 @@ class DiskImage extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            Image.asset('assets/oleos.jpg'),
+            SpinPerfect(
+              duration: Duration( seconds: 10 ),
+              infinite: true,
+              manualTrigger: true,
+              controller: ( animationController) => audioPlayerModel.controller = animationController,
+              child: Image.asset('assets/oleos.jpg')
+            ),
             Container(
               width: 50,
               height: 50,
