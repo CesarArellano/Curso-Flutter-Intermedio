@@ -22,13 +22,48 @@ class DurationDiskImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      margin: EdgeInsets.only(top: 75.0),
       child: Row(
         children: <Widget>[
-          //TODO: Disk
-          DiskImage()          
-          //Progress Bar 
+          DiskImage(),
+          SizedBox(width: 50.0),
+          MusicProgressBar()
         ],
       ),
+    );
+  }
+}
+
+class MusicProgressBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {    
+    final styleText = TextStyle(color: Colors.white.withOpacity(0.4));
+
+    return Column(
+      children: <Widget>[
+        Text('04:30', style: styleText),
+        SizedBox(height: 20.0),
+        Stack(
+          children: <Widget>[
+            Container(
+              width: 3,
+              height: 230,
+              color: Colors.white.withOpacity(0.1),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: 3,
+                height: 100,
+                color: Colors.white.withOpacity(0.8),
+              ),
+            )
+          ],
+        ),
+        SizedBox(height: 20.0),
+        Text('00:00', style: styleText)
+      ],
     );
   }
 }
@@ -59,6 +94,7 @@ class DiskImage extends StatelessWidget {
               width: 18,
               height: 18,
               decoration: BoxDecoration(
+                
                 color: Color(0xff1C1C25),
                 borderRadius: BorderRadius.circular(100)
               ),
