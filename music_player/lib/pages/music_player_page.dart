@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:music_player/widgets/custom_appbar.dart';
 
@@ -10,13 +11,42 @@ class MusicPlayerPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           CustomAppBar(),
-          DurationDiskImage()
+          DurationDiskImage(),
+          TitlePlay()
         ],
       )
     );
   }
 }
+class TitlePlay extends StatelessWidget {
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 40.0),
+      margin: EdgeInsets.only(top: 30.0),
+      child: Row(
+        children: <Widget>[
+          SizedBox(width: 60.0),
+          Column(
+            children: <Widget>[
+              Text('Óleos', style: TextStyle(fontSize: 30.0, color: Colors.white.withOpacity(0.8))),
+              Text('Camilo Séptimo', style: TextStyle(fontSize: 15.0, color: Colors.white.withOpacity(0.5))),        
+            ]
+          ),
+          Spacer(),
+          FloatingActionButton(
+            elevation: 0,
+            highlightElevation: 0,
+            backgroundColor: Color(0xffF8CB51),
+            onPressed: (){},
+            child: FaIcon(FontAwesomeIcons.play),
+          )
+        ],
+      ),
+    );
+  }
+}
 class DurationDiskImage extends StatelessWidget {
 
   @override
