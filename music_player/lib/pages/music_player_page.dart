@@ -100,7 +100,7 @@ class _TitlePlayState extends State<TitlePlay> with SingleTickerProviderStateMix
   void open() {
     final audioPlayerModel = Provider.of<AudioPlayerModel>(context, listen: false);
 
-    assetAudioPlayer.open(Audio('assets/Camilo-Séptimo-Óleos.mp3'));
+    assetAudioPlayer.open(Audio('assets/oleos.mp3'));
     
     assetAudioPlayer.currentPosition.listen((duration) {
       audioPlayerModel.current = duration;
@@ -167,7 +167,7 @@ class DurationDiskImage extends StatelessWidget {
       child: Row(
         children: <Widget>[
           DiskImage(),
-          SizedBox(width: 50.0),
+          SizedBox(width: 20.0),
           MusicProgressBar()
         ],
       ),
