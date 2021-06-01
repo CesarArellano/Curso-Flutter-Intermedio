@@ -13,7 +13,7 @@ final pageRoutes = <_Route>[
   _Route(FontAwesomeIcons.slideshare, 'Slideshow', SlideShowPage()),
   _Route(FontAwesomeIcons.ambulance, 'Emergency', EmergencyPage()),
   _Route(FontAwesomeIcons.heading, 'Headings', HeadersPage()),
-  _Route(FontAwesomeIcons.peopleCarry, 'Animated Square', SquareAnimated()),
+  _Route(FontAwesomeIcons.peopleCarry, 'Animated Square', AnimationsPage()),
   _Route(FontAwesomeIcons.circleNotch, 'Progress Bar', PieChartsPage()),
   _Route(FontAwesomeIcons.pinterest, 'Pinterest', PinterestPage()),
   _Route(FontAwesomeIcons.mobile, 'Slivers', SliverListPage()),

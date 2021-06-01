@@ -53,7 +53,7 @@ class _SquareAnimatedState extends State<SquareAnimated> with SingleTickerProvid
       CurvedAnimation(parent: controller, curve: Interval(0.75, 1.0, curve: Curves.easeOut))
     );
 
-    moveRight = Tween(begin: 1.0, end: 250.0).animate(
+    moveRight = Tween(begin: 1.0, end: 75.0).animate(
       CurvedAnimation(parent: controller, curve: Curves.elasticOut)
     );
 
