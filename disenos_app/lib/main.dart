@@ -4,18 +4,26 @@ import 'package:provider/provider.dart';
 import 'package:disenos_app/src/theme/theme.dart';
 import 'package:disenos_app/src/pages/launcher_page.dart';
 
-void main() => runApp(MyApp()); 
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => new ThemeChanger(2),
+      child: MyApp()
+    )    
+  ); 
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => new ThemeChanger(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Material App',
-        home: LauncherPage(),
-      ),
+
+    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+    
+    return MaterialApp(
+      theme: currentTheme,
+      debugShowCheckedModeBanner: false,
+      title: 'Material App',
+      home: LauncherPage(),
     );
   }
 }
