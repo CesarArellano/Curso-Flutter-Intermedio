@@ -27,7 +27,7 @@ class MySlideShow extends StatelessWidget {
     return SlideShow(
       primaryBullet: 15,
       upDots: false,
-      primaryColor: (appTheme.darkTheme) ? appTheme.currentTheme.accentColor :Color(0xffFF5A7E),
+      primaryColor: (appTheme.darkTheme) ? appTheme.currentTheme.accentColor : Color(0xffFF5A7E),
       secondaryColor: Colors.grey,
       slides: <Widget>[
         SvgPicture.asset('assets/svgs/slide-1.svg'),

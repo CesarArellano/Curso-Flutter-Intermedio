@@ -13,11 +13,15 @@ class PinterestButton {
 
 class PinterestMenu extends StatelessWidget {
   final bool show;
+  final Color backgroundColor;
+  final Color activeColor;
   final List<PinterestButton> items;
 
   PinterestMenu({
     this.show = true,
-    @required this.items
+    @required this.items, 
+    this.backgroundColor = Colors.white, 
+    this.activeColor = Colors.black
   });
     
   @override
@@ -27,8 +31,12 @@ class PinterestMenu extends StatelessWidget {
       child: AnimatedOpacity(
         opacity: ( show ) ? 1 : 0,
         duration: Duration(milliseconds: 250),
-        child: _PinterestMenuBackground(
-          child: _MenuItems(menuItems: items),
+        child: _PinterestMenuBackground(          
+          child: _MenuItems(
+            menuItems: items,
+            activeColor: activeColor
+          ),
+          backgroundColor: backgroundColor,  
         ),
       ),
     );
@@ -37,8 +45,9 @@ class PinterestMenu extends StatelessWidget {
 
 class _PinterestMenuBackground extends StatelessWidget {
   final Widget child;
+  final Color backgroundColor;
 
-  _PinterestMenuBackground({ this.child });
+  _PinterestMenuBackground({ this.child, this.backgroundColor });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +56,7 @@ class _PinterestMenuBackground extends StatelessWidget {
       width: 250,
       height: 60,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius:  BorderRadius.circular(100),
         boxShadow: <BoxShadow> [
           BoxShadow(
@@ -62,24 +71,26 @@ class _PinterestMenuBackground extends StatelessWidget {
 }
 
 class _MenuItems extends StatelessWidget {
-  
+  final Color activeColor;
   final List<PinterestButton> menuItems;
-  _MenuItems({ this.menuItems });
+  
+  _MenuItems({ this.menuItems, this.activeColor });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: List.generate(menuItems.length, (i) => _PinterestMenuButton(i, menuItems[i]))
+      children: List.generate(menuItems.length, (i) => _PinterestMenuButton(i, menuItems[i], activeColor))
     );
   }
 }
 
 class _PinterestMenuButton extends StatelessWidget {
   final int index;
+  final Color activeColor;
   final PinterestButton item;
 
-  _PinterestMenuButton(this.index, this.item);
+  _PinterestMenuButton(this.index, this.item, this.activeColor);
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +106,7 @@ class _PinterestMenuButton extends StatelessWidget {
         child: Icon(
           item.icon, 
           size: (selectedItem == index) ? 30.0 : 25.0, 
-          color: (selectedItem == index) ? Colors.black : Colors.black54
+          color: (selectedItem == index) ? activeColor : Colors.grey
         ),
       ),
     );
