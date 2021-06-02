@@ -12,6 +12,7 @@ class PinterestPage extends StatelessWidget {
       create: (_) => _MenuModel(),
       child: Scaffold(
         body: Stack(
+          alignment: Alignment.center,
           children: <Widget>[
             PinterestGrid(),
             PinterestBottomMenu(),          
@@ -25,12 +26,11 @@ class PinterestPage extends StatelessWidget {
 class PinterestBottomMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     final show = Provider.of<_MenuModel>(context).show;
     final appTheme = Provider.of<ThemeChanger>(context);
-    if(screenWidth > 500) {
-      screenWidth = screenWidth - 300;
-    }
+    
     return Positioned(
       bottom: 30,
       child: Container(
