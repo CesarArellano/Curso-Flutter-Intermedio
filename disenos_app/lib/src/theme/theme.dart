@@ -11,9 +11,7 @@ class ThemeChanger with ChangeNotifier {
       case 1: // Light
         _darkTheme = false;
         _customTheme = false;
-        _currentTheme = ThemeData.light().copyWith(
-          accentColor: Colors.pink
-        );
+        _currentTheme = ThemeData.light();
       break;
 
       case 2: // Dark
@@ -52,9 +50,7 @@ class ThemeChanger with ChangeNotifier {
         primaryColorLight: Colors.white,
       );
     } else {
-      this._currentTheme = ThemeData.light().copyWith(
-        accentColor: Colors.pink
-      );
+      this._currentTheme = ThemeData.light();
     }
     notifyListeners();
   }
