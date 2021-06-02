@@ -25,16 +25,21 @@ class Screen1Page extends StatelessWidget {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => Screen2Page(),
-      // transitionDuration: Duration(seconds: 1),
+      transitionDuration: Duration(seconds: 1),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final curveAnimation = CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+        final curveAnimation = CurvedAnimation(parent: animation, curve: Curves.easeIn);
         // return SlideTransition(
         //   position: Tween<Offset>(begin: Offset(0.5, 1.0), end: Offset.zero).animate(curveAnimation),
         //   child: child,
         // );
 
-        return ScaleTransition(
-          scale: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
+        // return ScaleTransition(
+        //   scale: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
+        //   child: child,
+        // );
+
+        return RotationTransition(
+          turns: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
           child: child,
         );
       }
