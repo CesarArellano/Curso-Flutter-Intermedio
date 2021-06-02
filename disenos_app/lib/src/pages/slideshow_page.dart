@@ -9,13 +9,21 @@ import 'package:disenos_app/src/theme/theme.dart';
 class SlideShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bool _isLarge;
+    if ( MediaQuery.of(context).size.height > 500 ) {
+      _isLarge = true;
+    } else {
+      _isLarge = false;
+    }
+    final children = [
+      Expanded(child: MySlideShow()),
+      Expanded(child: MySlideShow()),
+    ];
+
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: MySlideShow()),
-          Expanded(child: MySlideShow()),
-        ],
-      )
+      body: ( _isLarge ) 
+      ? Column( children: children)
+      : Row( children: children)
     );
   }
 }
