@@ -40,7 +40,7 @@ class _NewButtonList extends StatelessWidget {
           )
         ),
         onPressed: () {},
-        child: Text('CREATE NEW LIST', style: TextStyle(color: appTheme.currentTheme.scaffoldBackgroundColor ))
+        child: Text('CREATE NEW LIST')
       )
     );
   }

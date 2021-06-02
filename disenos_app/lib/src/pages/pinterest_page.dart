@@ -41,7 +41,7 @@ class PinterestBottomMenu extends StatelessWidget {
             PinterestMenu(
               show: show,
               backgroundColor: appTheme.currentTheme.scaffoldBackgroundColor,
-              activeColor: (appTheme.darkTheme) ? appTheme.currentTheme.accentColor : Colors.black,
+              activeColor: (appTheme.darkTheme) ? appTheme.currentTheme.accentColor : Colors.lightBlue,
               items: [
                 PinterestButton(icon: Icons.pie_chart, onPressed: () { print('Icon pie_chart'); }),
                 PinterestButton(icon: Icons.search, onPressed: () { print('Icon search'); }),
