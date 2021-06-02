@@ -33,6 +33,13 @@ class EmergencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool _isLarge;
+    if ( MediaQuery.of(context).size.height > 500 ) {
+      _isLarge = true;
+    } else {
+      _isLarge = false;
+    }
+
     List<Widget> itemMap = items.map(
       (item) => FadeInLeft(
         duration: Duration(milliseconds: 450),
@@ -52,16 +59,16 @@ class EmergencyPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 200),
+            margin: EdgeInsets.only(top: (_isLarge) ? 210 : 10),
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: <Widget> [
-                SizedBox(height: 80),
+                SizedBox(height: (_isLarge) ? 80 : 20),
                 ...itemMap
               ]
             ),
           ),
-          Header(),
+          if( _isLarge ) Header(),
         ],
       )
     );
