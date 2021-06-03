@@ -1,14 +1,14 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:music_player/helpers/helpers.dart';
-import 'package:music_player/models/audioplayer_model.dart';
-
-import 'package:music_player/widgets/custom_appbar.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 
-class MusicPlayerPage extends StatelessWidget {
+import 'package:music_player/src/helpers/helpers.dart';
+import 'package:music_player/src/models/audio_player_model.dart';
+import 'package:music_player/src/widgets/custom_app_bar.dart';
 
+class MusicPlayerPage extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +20,7 @@ class MusicPlayerPage extends StatelessWidget {
               CustomAppBar(),
               DurationDiskImage(),
               TitlePlay(),
-              SizedBox(height: 50.0),
-              Expanded(
-                child: Lyrics()
-              )
+              Expanded(child: Lyrics())
             ],
           ),
         ],
@@ -33,6 +30,7 @@ class MusicPlayerPage extends StatelessWidget {
 }
 
 class Background extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -40,31 +38,32 @@ class Background extends StatelessWidget {
       width: double.infinity,
       height: screenSize.height * 0.8,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60)),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(70)),
         gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.center,
           colors: <Color>[
             Color(0xff33333E),
-            Color(0xff201E28),
+            Color(0xff201E28)
           ]
         )
       ),
+      
     );
   }
 }
 
 class Lyrics extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final List<String> lyrics = getLyrics();
     return Container(
+      margin: EdgeInsets.only(top: 30.0),
       child: ListWheelScrollView(
         physics: BouncingScrollPhysics(),
-        itemExtent: 42,
+        itemExtent: 42,        
         diameterRatio: 1.5,
         children: lyrics.map(
-          (line) => Text(line, style: TextStyle(fontSize: 20, color: Colors.white.withOpacity(0.6)))
+          (line) => Text(line, style: TextStyle(fontSize: 20.0, color: Colors.white.withOpacity(0.6)))
         ).toList(),
       ),
     );
@@ -72,34 +71,32 @@ class Lyrics extends StatelessWidget {
 }
 
 class TitlePlay extends StatefulWidget {
-  
   @override
   _TitlePlayState createState() => _TitlePlayState();
 }
 
-class _TitlePlayState extends State<TitlePlay> with SingleTickerProviderStateMixin {
-  
+class _TitlePlayState extends State<TitlePlay> with SingleTickerProviderStateMixin{
   bool isPlaying = false;
   bool firstTime = true;
   AnimationController playAnimation;
-
   final assetAudioPlayer = new AssetsAudioPlayer();
+
   @override
-  void initState() {
-    playAnimation = new AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    
+  void initState() { 
+    playAnimation = new AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     super.initState();
+    
   }
 
   @override
-  void dispose() {
+  void dispose() { 
     playAnimation.dispose();
     super.dispose();
   }
 
   void open() {
     final audioPlayerModel = Provider.of<AudioPlayerModel>(context, listen: false);
-
+    
     assetAudioPlayer.open(Audio('assets/oleos.mp3'));
     
     assetAudioPlayer.currentPosition.listen((duration) {
@@ -110,33 +107,37 @@ class _TitlePlayState extends State<TitlePlay> with SingleTickerProviderStateMix
       audioPlayerModel.songDuration = playingAudio.audio.duration;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 40.0),
       margin: EdgeInsets.only(top: 30.0),
+      padding: EdgeInsets.symmetric(horizontal: 40.0),
       child: Row(
         children: <Widget>[
           SizedBox(width: 60.0),
           Column(
             children: <Widget>[
-              Text('Óleos', style: TextStyle(fontSize: 30.0, color: Colors.white.withOpacity(0.8))),
-              Text('Camilo Séptimo', style: TextStyle(fontSize: 15.0, color: Colors.white.withOpacity(0.5))),        
-            ]
+              Text('Óleos', style: TextStyle(fontSize: 30, color: Colors.white.withOpacity(0.8))),
+              Text('Camilo Séptimo', style: TextStyle(fontSize: 15, color: Colors.white.withOpacity(0.5)))
+            ],
           ),
           Spacer(),
           FloatingActionButton(
             backgroundColor: Color(0xffF8CB51),
+            child: AnimatedIcon(
+              progress: playAnimation,
+              icon: AnimatedIcons.play_pause,
+            ),
             onPressed: () {
               final audioPlayerModel = Provider.of<AudioPlayerModel>(context, listen: false);
-              if ( this.isPlaying ) {
+              if ( isPlaying ) {
                 playAnimation.reverse();
-                this.isPlaying = false;
+                isPlaying = false;
                 audioPlayerModel.controller.stop();
-              } else {
+              } else {  
                 playAnimation.forward();
-                this.isPlaying = true;
+                isPlaying = true;
                 audioPlayerModel.controller.repeat();
               }
 
@@ -147,27 +148,25 @@ class _TitlePlayState extends State<TitlePlay> with SingleTickerProviderStateMix
                 assetAudioPlayer.playOrPause();
               }
             },
-            child: AnimatedIcon(              progress: playAnimation,
-              icon: AnimatedIcons.play_pause
-              
-            ),
-          )
+          ),
+          SizedBox(width: 5.0)
         ],
-      ),
+      )
     );
   }
 }
+
 class DurationDiskImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
       margin: EdgeInsets.only(top: 75.0),
       child: Row(
         children: <Widget>[
           DiskImage(),
-          SizedBox(width: 20.0),
+          SizedBox(width: 40.0),
           MusicProgressBar()
         ],
       ),
@@ -177,34 +176,33 @@ class DurationDiskImage extends StatelessWidget {
 
 class MusicProgressBar extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {    
-    final styleText = TextStyle(color: Colors.white.withOpacity(0.4));
+  Widget build(BuildContext context) {
     final audioPlayerModel = Provider.of<AudioPlayerModel>(context);
     final percentage = audioPlayerModel.percentage;
 
     return Column(
       children: <Widget>[
-        Text('${audioPlayerModel.songTotalDuration}', style: styleText),
-        SizedBox(height: 20.0),
+        Text('${ audioPlayerModel.songTotalDuration }'),
+        SizedBox(height: 10.0),
         Stack(
           children: <Widget>[
             Container(
               width: 3,
               height: 230,
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withOpacity(0.1)
             ),
             Positioned(
               bottom: 0,
               child: Container(
                 width: 3,
                 height: 230 * percentage,
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withOpacity(0.8)
               ),
-            )
+            ),
           ],
         ),
-        SizedBox(height: 20.0),
-        Text('${audioPlayerModel.currentSecond}', style: styleText)
+        SizedBox(height: 10.0),
+        Text('${ audioPlayerModel.currentSecond }'),
       ],
     );
   }
@@ -214,54 +212,55 @@ class DiskImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final audioPlayerModel = Provider.of<AudioPlayerModel>(context);
-    
+    final borderRadius = BorderRadius.circular(125);
+    final audioPlayerModel = Provider.of<AudioPlayerModel>(context, listen: false);
+
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.0),
       width: 250,
       height: 250,
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        gradient: LinearGradient(          
+          colors: <Color> [
+            Color(0xff484750),
+            Color(0xff1E1C24)
+          ]
+        )
+      ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(200),
+        borderRadius: borderRadius,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
             SpinPerfect(
-              duration: Duration( seconds: 10 ),
+              animate: false,
+              duration: Duration(seconds: 10),
               infinite: true,
-              manualTrigger: true,
-              controller: ( animationController) => audioPlayerModel.controller = animationController,
+              controller: (animationController) {  
+                audioPlayerModel.controller = animationController;
+              },
               child: Image.asset('assets/oleos.jpg')
             ),
             Container(
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Colors.black38,
-                borderRadius: BorderRadius.circular(100)
+                borderRadius: borderRadius,
+                color: Colors.black38
               ),
             ),
             Container(
-              width: 18,
-              height: 18,
+              width: 20,
+              height: 20,
               decoration: BoxDecoration(
-                
-                color: Color(0xff1C1C25),
-                borderRadius: BorderRadius.circular(100)
+                borderRadius: borderRadius,
+                color: Color(0xff1C1C25)
               ),
             ),
           ],
-        ),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(200),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          colors: <Color>[
-            Color(0xff484750),
-            Color(0xff1E1C24)
-          ]
         )
-      ),
+      )
     );
   }
 }

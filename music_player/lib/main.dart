@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
-import 'package:music_player/themes/theme.dart';
-import 'package:music_player/pages/music_player_page.dart';
-import 'package:music_player/models/audioplayer_model.dart';
+import 'package:music_player/src/themes/theme.dart';
+
+import 'package:music_player/src/pages/music_player_page.dart';
+
+import 'package:music_player/src/models/audio_player_model.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,9 +19,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Music Player',
+        title: 'Material App',
+        home: MusicPlayerPage(),
         theme: myTheme,
-        home: MusicPlayerPage()
       ),
     );
   }
