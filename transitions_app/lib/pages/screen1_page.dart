@@ -25,7 +25,7 @@ class Screen1Page extends StatelessWidget {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => Screen2Page(),
-      transitionDuration: Duration(seconds: 1),
+      transitionDuration: Duration(milliseconds: 250),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         final curveAnimation = CurvedAnimation(parent: animation, curve: Curves.easeIn);
         // return SlideTransition(
@@ -38,10 +38,24 @@ class Screen1Page extends StatelessWidget {
         //   child: child,
         // );
 
-        return RotationTransition(
-          turns: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
+        // return RotationTransition(
+        //   turns: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
+        //   child: child,
+        // );
+        
+        return FadeTransition(
+          opacity: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
           child: child,
         );
+
+        // Combinando Transitions
+        // return RotationTransition(
+        //   turns: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
+        //   child: FadeTransition(
+        //     opacity: Tween<double>(begin: 0.0, end: 1.0).animate(curveAnimation),
+        //     child: child,
+        //   ),
+        // );
       }
     );
   }
