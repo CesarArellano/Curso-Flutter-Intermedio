@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AudioPlayerModel())
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => AudioPlayerModel())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
