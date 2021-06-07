@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoes_app/src/pages/shoe_desc_page.dart';
 
 class ShoeSizePreview extends StatelessWidget {
   final bool fullScreen;
@@ -6,25 +7,32 @@ class ShoeSizePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: (this.fullScreen) 
-      ? EdgeInsets.zero 
-      : EdgeInsets.symmetric( horizontal: 30, vertical: 5.0),
-      child: Container(
-        width: double.infinity,
-        height: 430,
-        decoration: BoxDecoration(
-          color: Color(0xffFFCF53),
-          borderRadius: (!this.fullScreen) 
-            ? BorderRadius.circular(50)
-            : BorderRadius.vertical(bottom: Radius.circular(60.0))
+    return GestureDetector(
+      onTap: () {
+        if (!this.fullScreen) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => ShoeDescPage()));
+        }
+      },
+      child: Padding(
+        padding: (this.fullScreen) 
+        ? EdgeInsets.zero 
+        : EdgeInsets.symmetric( horizontal: 30, vertical: 5.0),
+        child: Container(
+          width: double.infinity,
+          height: 430,
+          decoration: BoxDecoration(
+            color: Color(0xffFFCF53),
+            borderRadius: (!this.fullScreen) 
+              ? BorderRadius.circular(50)
+              : BorderRadius.vertical(bottom: Radius.circular(60.0))
+          ),
+          child: Column(
+            children: <Widget>[
+              _ShoeWithShadow(),
+              if (!fullScreen) _ShowSizes()
+            ]
+          )
         ),
-        child: Column(
-          children: <Widget>[
-            _ShoeWithShadow(),
-            if (!fullScreen) _ShowSizes()
-          ]
-        )
       ),
     );
   }
@@ -34,7 +42,7 @@ class _ShowSizes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
