@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:shoes_app/src/models/shoe_model.dart';
 import 'package:shoes_app/src/pages/shoe_desc_page.dart';
 
 class ShoeSizePreview extends StatelessWidget {
@@ -65,25 +68,36 @@ class _ShoeSizeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 45,
-      height: 45,
-      alignment: Alignment.center,
-      child: Text('${number.toString().replaceAll('.0', '')}',
+    final shoeModel = Provider.of<ShoeModel>(context);
+    return GestureDetector(
+      onTap: () {
+        final shoeModel = Provider.of<ShoeModel>(context, listen: false);
+        shoeModel.size = this.number;
+      },
+      child: Container(
+        width: 45,
+        height: 45,
+        alignment: Alignment.center,
+        child: Text('${number.toString().replaceAll('.0', '')}',
           style: TextStyle(
-              color: (this.number == 9) ? Colors.white : Color(0xffF1A23A),
-              fontSize: 16,
-              fontWeight: FontWeight.bold)),
-      decoration: BoxDecoration(
-          color: (this.number == 9) ? Color(0xffF1A23A) : Colors.white,
+            color: (this.number == shoeModel.size) ? Colors.white : Color(0xffF1A23A),
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          )
+        ),
+        decoration: BoxDecoration(
+          color: (this.number == shoeModel.size) ? Color(0xffF1A23A) : Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
-            if (this.number == 9)
+            if (this.number == shoeModel.size)
               BoxShadow(
-                  color: Color(0xffF1A23A),
-                  blurRadius: 10.0,
-                  offset: Offset(0, 5))
-          ]),
+                color: Color(0xffF1A23A),
+                blurRadius: 10.0,
+                offset: Offset(0, 5)
+              )
+          ]
+        ),
+      ),
     );
   }
 }
@@ -91,12 +105,13 @@ class _ShoeSizeBox extends StatelessWidget {
 class _ShoeWithShadow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final shoeModel = Provider.of<ShoeModel>(context);
     return Padding(
       padding: EdgeInsets.all(50.0),
       child: Stack(
         children: <Widget>[
           _ShoeShadow(),
-          Image.asset('assets/imgs/azul.png'),
+          Image.asset(shoeModel.assetImage),
         ],
       ),
     );

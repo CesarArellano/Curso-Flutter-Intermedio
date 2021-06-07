@@ -1,10 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoes_app/src/helpers/helpers.dart';
+import 'package:shoes_app/src/models/shoe_model.dart';
 import 'package:shoes_app/src/widgets/custom_widgets.dart';
 
 class ShoeDescPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    changeLightStatus();
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -18,6 +22,7 @@ class ShoeDescPage extends StatelessWidget {
                 top: 80,
                 child: FloatingActionButton(
                   onPressed: () {
+                    changeDarkStatus();
                     Navigator.pop(context);
                   },
                   child: Icon(Icons.chevron_left, color: Colors.white, size: 60),
@@ -101,10 +106,10 @@ class _ColorsAndMore extends StatelessWidget {
           Expanded(
             child: Stack(
               children: <Widget>[
-                Positioned(left: 90, child: _ColorButton(color: Color(0xff2099F1), index: 4)),
-                Positioned(left: 60, child: _ColorButton(color: Color(0xffFFAD29), index: 3)),
-                Positioned(left: 30, child: _ColorButton(color: Color(0xffC6D642), index: 2)),
-                _ColorButton(color: Color(0xff364D56)),
+                Positioned(left: 90, child: _ColorButton(color: Color(0xff2099F1), index: 4, urlImage: 'assets/imgs/azul.png')),
+                Positioned(left: 60, child: _ColorButton(color: Color(0xffFFAD29), index: 3, urlImage: 'assets/imgs/amarillo.png')),
+                Positioned(left: 30, child: _ColorButton(color: Color(0xffC6D642), index: 2, urlImage: 'assets/imgs/verde.png')),
+                _ColorButton(color: Color(0xff364D56), urlImage: 'assets/imgs/negro.png'),
               ],
             ),
           ),
@@ -118,18 +123,25 @@ class _ColorsAndMore extends StatelessWidget {
 class _ColorButton extends StatelessWidget {
   final Color color;
   final int index;
+  final String urlImage;
 
-  _ColorButton({ this.color, this.index = 1 });
+  _ColorButton({ this.color, this.index = 1,  @required this.urlImage });
 
   @override
   Widget build(BuildContext context) {
     return FadeInLeft(
       delay: Duration(milliseconds: this.index * 200),
       duration: Duration(milliseconds: 300),
-      child: Container(
-        width: 45,
-        height: 45,
-        decoration: BoxDecoration(color: this.color, shape: BoxShape.circle),
+      child: GestureDetector(
+        onTap: () {
+          final shoeModel = Provider.of<ShoeModel>(context, listen: false);
+          shoeModel.assetImage = this.urlImage;
+        },
+        child: Container(
+          width: 45,
+          height: 45,
+          decoration: BoxDecoration(color: this.color, shape: BoxShape.circle),
+        ),
       ),
     );
   }
