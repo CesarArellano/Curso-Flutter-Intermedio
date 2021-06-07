@@ -7,7 +7,21 @@ class ShoeDescPage extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: <Widget>[
-        ShoeSizePreview(fullScreen: true),
+        Stack(
+          children: [
+            ShoeSizePreview(fullScreen: true),
+            Positioned(
+              top: 80,
+              child: FloatingActionButton(
+                onPressed: () {  },
+                child: Icon(Icons.chevron_left, color: Colors.white, size: 60),
+                elevation: 0,
+                highlightElevation: 0,
+                backgroundColor: Colors.transparent,
+              ),
+            )
+          ],
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
@@ -19,13 +33,54 @@ class ShoeDescPage extends StatelessWidget {
                       "The Nike Air Max 720 goes bigger than ever before with Nike's taller Air unit yet, offering more air underfoot for unimaginable, all-day comfort. Has Air Max gone too far? We hope so.",
                 ),
                 _AmountBuyNow(),
-                _ColorsAndMore()
+                _ColorsAndMore(),
+                _LikeCartSettingsButton()
               ],
             ),
           ),
         )
       ],
     ));
+  }
+}
+
+class _LikeCartSettingsButton extends StatelessWidget {
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 30),
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _ShadowButton(Icon(Icons.star, color: Colors.red, size: 25)),
+          _ShadowButton(Icon(Icons.add_shopping_cart, color: Colors.grey.withOpacity(0.4), size: 25)),
+          _ShadowButton(Icon(Icons.settings, color: Colors.grey.withOpacity(0.4), size: 25)),
+        ],
+      ),
+    );
+  }
+}
+
+class _ShadowButton extends StatelessWidget {
+  final Icon icon;
+  _ShadowButton(this.icon);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 55,
+      height: 55,
+      child: this.icon,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(color: Colors.black12, spreadRadius: -5, blurRadius: 20, offset: Offset(0, 10))
+        ]
+      ),
+    );
   }
 }
 
